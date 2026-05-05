@@ -1,0 +1,2431 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OpenAI API",
+    "version": "2.3.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.ads.openai.com/v1"
+    }
+  ],
+  "paths": {
+    "/campaigns": {
+      "get": {
+        "summary": "Get all campaigns for an ad account",
+        "operationId": "ListCampaignsMethod",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ListOrderParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignsResource"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.campaigns.list_campaigns.ListCampaignsMethod"
+      },
+      "post": {
+        "summary": "Create a campaign for an ad account",
+        "operationId": "CreateCampaignMethod",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCampaignBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.campaigns.create_campaign.CreateCampaignMethod"
+      }
+    },
+    "/campaigns/{campaign_id}": {
+      "get": {
+        "summary": "Get a campaign",
+        "operationId": "GetCampaignMethod",
+        "parameters": [
+          {
+            "name": "campaign_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.campaigns.get_campaign.GetCampaignMethod"
+      },
+      "post": {
+        "summary": "Update a campaign",
+        "operationId": "UpdateCampaignMethod",
+        "parameters": [
+          {
+            "name": "campaign_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCampaignBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.campaigns.update_campaign.UpdateCampaignMethod"
+      }
+    },
+    "/campaigns/{campaign_id}/activate": {
+      "post": {
+        "summary": "Activate a campaign",
+        "operationId": "ActivateCampaignMethod",
+        "parameters": [
+          {
+            "name": "campaign_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.campaigns.activate_campaign.ActivateCampaignMethod"
+      }
+    },
+    "/campaigns/{campaign_id}/pause": {
+      "post": {
+        "summary": "Pause a campaign",
+        "operationId": "PauseCampaignMethod",
+        "parameters": [
+          {
+            "name": "campaign_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.campaigns.pause_campaign.PauseCampaignMethod"
+      }
+    },
+    "/campaigns/{campaign_id}/archive": {
+      "post": {
+        "summary": "Archive a campaign",
+        "operationId": "ArchiveCampaignMethod",
+        "parameters": [
+          {
+            "name": "campaign_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.campaigns.archive_campaign.ArchiveCampaignMethod"
+      }
+    },
+    "/ad_account": {
+      "get": {
+        "summary": "Get metadata for the ad account",
+        "operationId": "GetAdAccountMethod",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdAccountResource"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.get_ad_account.GetAdAccountMethod"
+      }
+    },
+    "/ad_account/insights": {
+      "get": {
+        "summary": "Get ad account insights aggregated by time granularity.",
+        "operationId": "GetAdAccountInsightsMethod",
+        "parameters": [
+          {
+            "name": "time_granularity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "aggregation_level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_ranges",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsightsResource"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.insights.get_ad_account_insights.GetAdAccountInsightsMethod"
+      }
+    },
+    "/campaigns/{campaign_id}/insights": {
+      "get": {
+        "summary": "Get campaign insights aggregated by time granularity.",
+        "operationId": "GetCampaignInsightsMethod",
+        "parameters": [
+          {
+            "name": "campaign_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_granularity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "aggregation_level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_ranges",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsightsResource"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.insights.get_campaign_insights.GetCampaignInsightsMethod"
+      }
+    },
+    "/ad_groups/{ad_group_id}/insights": {
+      "get": {
+        "summary": "Get ad group insights aggregated by time granularity.",
+        "operationId": "GetAdGroupInsightsMethod",
+        "parameters": [
+          {
+            "name": "ad_group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_granularity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "aggregation_level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_ranges",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsightsResource"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.insights.get_ad_group_insights.GetAdGroupInsightsMethod"
+      }
+    },
+    "/ads/{ad_id}/insights": {
+      "get": {
+        "summary": "Get ad insights aggregated by time granularity.",
+        "operationId": "GetAdInsightsMethod",
+        "parameters": [
+          {
+            "name": "ad_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_granularity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "aggregation_level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_ranges",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsightsResource"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.insights.get_ad_insights.GetAdInsightsMethod"
+      }
+    },
+    "/ad_groups": {
+      "get": {
+        "summary": "Get all ad groups for a campaign",
+        "operationId": "ListAdGroupsMethod",
+        "parameters": [
+          {
+            "name": "campaign_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ListOrderParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdGroupsResource"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ad_groups.list_ad_groups.ListAdGroupsMethod"
+      },
+      "post": {
+        "summary": "Create an ad group for a campaign",
+        "operationId": "CreateAdGroupMethod",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAdGroupBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdGroupItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ad_groups.create_ad_group.CreateAdGroupMethod"
+      }
+    },
+    "/ad_groups/{ad_group_id}": {
+      "get": {
+        "summary": "Get an ad group",
+        "operationId": "GetAdGroupMethod",
+        "parameters": [
+          {
+            "name": "ad_group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdGroupItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ad_groups.get_ad_group.GetAdGroupMethod"
+      },
+      "post": {
+        "summary": "Update an ad group",
+        "operationId": "UpdateAdGroupMethod",
+        "parameters": [
+          {
+            "name": "ad_group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdGroupBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdGroupItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ad_groups.update_ad_group.UpdateAdGroupMethod"
+      }
+    },
+    "/ad_groups/{ad_group_id}/activate": {
+      "post": {
+        "summary": "Activate an ad group",
+        "operationId": "ActivateAdGroupMethod",
+        "parameters": [
+          {
+            "name": "ad_group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdGroupItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ad_groups.activate_ad_group.ActivateAdGroupMethod"
+      }
+    },
+    "/ad_groups/{ad_group_id}/pause": {
+      "post": {
+        "summary": "Pause an ad group",
+        "operationId": "PauseAdGroupMethod",
+        "parameters": [
+          {
+            "name": "ad_group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdGroupItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ad_groups.pause_ad_group.PauseAdGroupMethod"
+      }
+    },
+    "/ad_groups/{ad_group_id}/archive": {
+      "post": {
+        "summary": "Archive an ad group",
+        "operationId": "ArchiveAdGroupMethod",
+        "parameters": [
+          {
+            "name": "ad_group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdGroupItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ad_groups.archive_ad_group.ArchiveAdGroupMethod"
+      }
+    },
+    "/ads": {
+      "get": {
+        "summary": "Get all ads for an ad group",
+        "operationId": "ListAdsMethod",
+        "parameters": [
+          {
+            "name": "ad_group_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ListOrderParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdsResource"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ads.list_ads.ListAdsMethod"
+      },
+      "post": {
+        "summary": "Create an ad for an ad group",
+        "operationId": "CreateAdMethod",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAdBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ads.create_ad.CreateAdMethod"
+      }
+    },
+    "/ads/{ad_id}": {
+      "get": {
+        "summary": "Get an ad",
+        "operationId": "GetAdMethod",
+        "parameters": [
+          {
+            "name": "ad_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ads.get_ad.GetAdMethod"
+      },
+      "post": {
+        "summary": "Update an ad",
+        "operationId": "UpdateAdMethod",
+        "parameters": [
+          {
+            "name": "ad_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ads.update_ad.UpdateAdMethod"
+      }
+    },
+    "/ads/{ad_id}/activate": {
+      "post": {
+        "summary": "Activate an ad",
+        "operationId": "ActivateAdMethod",
+        "parameters": [
+          {
+            "name": "ad_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ads.activate_ad.ActivateAdMethod"
+      }
+    },
+    "/ads/{ad_id}/pause": {
+      "post": {
+        "summary": "Pause an ad",
+        "operationId": "PauseAdMethod",
+        "parameters": [
+          {
+            "name": "ad_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ads.pause_ad.PauseAdMethod"
+      }
+    },
+    "/ads/{ad_id}/archive": {
+      "post": {
+        "summary": "Archive an ad",
+        "operationId": "ArchiveAdMethod",
+        "parameters": [
+          {
+            "name": "ad_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdItemBody"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.ads.archive_ad.ArchiveAdMethod"
+      }
+    },
+    "/upload": {
+      "post": {
+        "summary": "Upload an image URL or image file and return a file id",
+        "operationId": "UploadImageMethod",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadImageBody"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadImageBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadImageResource"
+                }
+              }
+            }
+          }
+        },
+        "x-openai-class-name": "sofa.api.methods.uploads.upload_image.UploadImageMethod"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ListOrderParam": {
+        "type": "string",
+        "enum": [
+          "asc",
+          "desc"
+        ],
+        "x-openai-class-name": "sofa.api.params.common.ListOrderParam"
+      },
+      "BudgetBody": {
+        "properties": {
+          "lifetime_spend_limit_micros": {
+            "type": "integer"
+          },
+          "daily_spend_limit_micros": {
+            "type": "integer"
+          }
+        },
+        "type": "object",
+        "required": [],
+        "x-openai-class-name": "sofa.api.resources.campaigns.BudgetBody"
+      },
+      "TargetingGeoLocationBody": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "country_code": {
+            "type": "string"
+          },
+          "region_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "type",
+          "country_code",
+          "region_code"
+        ],
+        "x-openai-class-name": "sofa.api.resources.campaigns.TargetingGeoLocationBody"
+      },
+      "TargetingGeoLocationsBody": {
+        "properties": {
+          "countries": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "include": {
+            "items": {
+              "$ref": "#/components/schemas/TargetingGeoLocationBody"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "required": [],
+        "x-openai-class-name": "sofa.api.resources.campaigns.TargetingGeoLocationsBody"
+      },
+      "TargetingBody": {
+        "properties": {
+          "locations": {
+            "$ref": "#/components/schemas/TargetingGeoLocationsBody"
+          },
+          "excluded_locations": {
+            "$ref": "#/components/schemas/TargetingGeoLocationsBody"
+          }
+        },
+        "type": "object",
+        "required": [],
+        "x-openai-class-name": "sofa.api.resources.campaigns.TargetingBody"
+      },
+      "CampaignItemBody": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "unixtime"
+          },
+          "updated_at": {
+            "type": "integer",
+            "format": "unixtime"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "start_time": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "format": "unixtime"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "end_time": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "format": "unixtime"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "budget": {
+            "$ref": "#/components/schemas/BudgetBody"
+          },
+          "targeting": {
+            "$ref": "#/components/schemas/TargetingBody"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name",
+          "description",
+          "status",
+          "start_time",
+          "end_time",
+          "budget"
+        ],
+        "x-openai-class-name": "sofa.api.resources.campaigns.CampaignItemBody"
+      },
+      "CampaignsResource": {
+        "properties": {
+          "object": {
+            "type": "string"
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/CampaignItemBody"
+            },
+            "type": "array"
+          },
+          "first_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "last_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "has_more": {
+            "type": "boolean"
+          }
+        },
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "first_id",
+          "last_id",
+          "has_more"
+        ],
+        "x-openai-class-name": "sofa.api.resources.campaigns.CampaignsBody"
+      },
+      "ActivePausedStatusParam": {
+        "type": "string",
+        "enum": [
+          "active",
+          "paused"
+        ],
+        "x-openai-class-name": "sofa.api.params.common.ActivePausedStatusParam"
+      },
+      "BudgetParams": {
+        "properties": {
+          "lifetime_spend_limit_micros": {
+            "type": "integer",
+            "minimum": 1000000
+          },
+          "daily_spend_limit_micros": {
+            "type": "integer",
+            "minimum": 1000000
+          }
+        },
+        "type": "object",
+        "required": [],
+        "x-openai-class-name": "sofa.api.params.campaigns.BudgetParams"
+      },
+      "TargetingGeoLocationParams": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "country_code": {
+            "type": "string"
+          },
+          "region_code": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "x-openai-class-name": "sofa.api.params.campaigns.TargetingGeoLocationParams"
+      },
+      "TargetingGeoLocationsParams": {
+        "properties": {
+          "countries": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "include": {
+            "items": {
+              "$ref": "#/components/schemas/TargetingGeoLocationParams"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "required": [],
+        "x-openai-class-name": "sofa.api.params.campaigns.TargetingGeoLocationsParams"
+      },
+      "TargetingParams": {
+        "properties": {
+          "locations": {
+            "$ref": "#/components/schemas/TargetingGeoLocationsParams"
+          },
+          "excluded_locations": {
+            "$ref": "#/components/schemas/TargetingGeoLocationsParams"
+          }
+        },
+        "type": "object",
+        "required": [],
+        "x-openai-class-name": "sofa.api.params.campaigns.TargetingParams"
+      },
+      "CreateCampaignBody": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 3,
+            "pattern": "^.*\\S.*$"
+          },
+          "description": {
+            "type": "string"
+          },
+          "start_time": {
+            "type": "integer",
+            "maximum": 4102444800,
+            "minimum": 946684800
+          },
+          "end_time": {
+            "type": "integer",
+            "maximum": 4102444800,
+            "minimum": 946684800
+          },
+          "status": {
+            "$ref": "#/components/schemas/ActivePausedStatusParam"
+          },
+          "budget": {
+            "$ref": "#/components/schemas/BudgetParams"
+          },
+          "targeting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetingParams"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "status",
+          "budget"
+        ],
+        "x-openai-class-name": "sofa.api.params.campaigns.CreateCampaignBody"
+      },
+      "ActivePausedArchivedStatusParam": {
+        "type": "string",
+        "enum": [
+          "active",
+          "paused",
+          "archived"
+        ],
+        "x-openai-class-name": "sofa.api.params.common.ActivePausedArchivedStatusParam"
+      },
+      "UpdateCampaignBody": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 3,
+            "pattern": "^.*\\S.*$"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "start_time": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 4102444800,
+                "minimum": 946684800
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "end_time": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 4102444800,
+                "minimum": 946684800
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "$ref": "#/components/schemas/ActivePausedArchivedStatusParam"
+          },
+          "budget": {
+            "$ref": "#/components/schemas/BudgetParams"
+          },
+          "targeting": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetingParams"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [],
+        "x-openai-class-name": "sofa.api.params.campaigns.UpdateCampaignBody"
+      },
+      "AdAccountResource": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "preview_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "currency_code": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "url",
+          "preview_url",
+          "timezone",
+          "currency_code"
+        ],
+        "x-openai-class-name": "sofa.api.resources.adaccount.AdAccountBody"
+      },
+      "InsightItemBody": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "start_time": {
+            "type": "integer"
+          },
+          "end_time": {
+            "type": "integer"
+          },
+          "readable_time": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "impressions": {
+            "type": "integer"
+          },
+          "clicks": {
+            "type": "integer"
+          },
+          "spend": {
+            "type": "number"
+          },
+          "ctr": {
+            "type": "number"
+          },
+          "cpc": {
+            "type": "number"
+          },
+          "cpm": {
+            "type": "number"
+          },
+          "ad_account_id": {
+            "type": "string"
+          },
+          "ad_account_name": {
+            "type": "string"
+          },
+          "ad_account_url": {
+            "type": "string"
+          },
+          "ad_account_budget_lifetime": {
+            "type": "number"
+          },
+          "ad_account_budget_daily": {
+            "type": "number"
+          },
+          "campaign_id": {
+            "type": "string"
+          },
+          "ad_group_id": {
+            "type": "string"
+          },
+          "ad_id": {
+            "type": "string"
+          },
+          "campaign_name": {
+            "type": "string"
+          },
+          "campaign_description": {
+            "type": "string"
+          },
+          "campaign_status": {
+            "type": "string"
+          },
+          "campaign_start_time": {
+            "type": "string"
+          },
+          "campaign_end_time": {
+            "type": "string"
+          },
+          "campaign_budget_lifetime": {
+            "type": "number"
+          },
+          "campaign_budget_daily": {
+            "type": "number"
+          },
+          "ad_group_name": {
+            "type": "string"
+          },
+          "ad_group_description": {
+            "type": "string"
+          },
+          "ad_group_status": {
+            "type": "string"
+          },
+          "ad_title": {
+            "type": "string"
+          },
+          "ad_name": {
+            "type": "string"
+          },
+          "ad_copy": {
+            "type": "string"
+          },
+          "ad_link": {
+            "type": "string"
+          },
+          "ad_status": {
+            "type": "string"
+          },
+          "ad_review_status": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "start_time",
+          "end_time"
+        ],
+        "x-openai-class-name": "sofa.api.resources.insights.InsightItemBody"
+      },
+      "InsightsResource": {
+        "properties": {
+          "object": {
+            "type": "string"
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/InsightItemBody"
+            },
+            "type": "array"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "first_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "last_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "has_more": {
+            "type": "boolean"
+          }
+        },
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "count",
+          "first_id",
+          "last_id",
+          "has_more"
+        ],
+        "x-openai-class-name": "sofa.api.resources.insights.InsightsBody"
+      },
+      "BiddingConfigBody": {
+        "properties": {
+          "billing_event_type": {
+            "type": "string"
+          },
+          "max_bid_micros": {
+            "type": "integer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "billing_event_type",
+          "max_bid_micros"
+        ],
+        "x-openai-class-name": "sofa.api.resources.ad_groups.BiddingConfigBody"
+      },
+      "AdGroupItemBody": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "unixtime"
+          },
+          "updated_at": {
+            "type": "integer",
+            "format": "unixtime"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "context_hints": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "status": {
+            "type": "string"
+          },
+          "bidding_config": {
+            "$ref": "#/components/schemas/BiddingConfigBody"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name",
+          "description",
+          "context_hints",
+          "status",
+          "bidding_config"
+        ],
+        "x-openai-class-name": "sofa.api.resources.ad_groups.AdGroupItemBody"
+      },
+      "AdGroupsResource": {
+        "properties": {
+          "object": {
+            "type": "string"
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/AdGroupItemBody"
+            },
+            "type": "array"
+          },
+          "first_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "last_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "has_more": {
+            "type": "boolean"
+          }
+        },
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "first_id",
+          "last_id",
+          "has_more"
+        ],
+        "x-openai-class-name": "sofa.api.resources.ad_groups.AdGroupsBody"
+      },
+      "BillingEventTypeParam": {
+        "type": "string",
+        "enum": [
+          "impression"
+        ],
+        "x-openai-class-name": "sofa.api.params.ad_groups.BillingEventTypeParam"
+      },
+      "BiddingConfigParams": {
+        "properties": {
+          "billing_event_type": {
+            "$ref": "#/components/schemas/BillingEventTypeParam"
+          },
+          "max_bid_micros": {
+            "type": "integer",
+            "maximum": 100000000,
+            "minimum": 1
+          }
+        },
+        "type": "object",
+        "required": [
+          "billing_event_type",
+          "max_bid_micros"
+        ],
+        "x-openai-class-name": "sofa.api.params.ad_groups.BiddingConfigParams"
+      },
+      "CreateAdGroupBody": {
+        "properties": {
+          "campaign_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 3,
+            "pattern": "^.*\\S.*$"
+          },
+          "description": {
+            "type": "string"
+          },
+          "context_hints": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ActivePausedStatusParam"
+          },
+          "bidding_config": {
+            "$ref": "#/components/schemas/BiddingConfigParams"
+          }
+        },
+        "type": "object",
+        "required": [
+          "campaign_id",
+          "name",
+          "status",
+          "bidding_config"
+        ],
+        "x-openai-class-name": "sofa.api.params.ad_groups.CreateAdGroupBody"
+      },
+      "UpdateAdGroupBody": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 3,
+            "pattern": "^.*\\S.*$"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "context_hints": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ActivePausedArchivedStatusParam"
+          },
+          "bidding_config": {
+            "$ref": "#/components/schemas/BiddingConfigParams"
+          }
+        },
+        "type": "object",
+        "required": [],
+        "x-openai-class-name": "sofa.api.params.ad_groups.UpdateAdGroupBody"
+      },
+      "AdSpecType": {
+        "type": "string",
+        "enum": [
+          "chat_card"
+        ],
+        "x-openai-class-name": "sofa.api.resources.ads.AdSpecType"
+      },
+      "ConversationalBottomOtmSpecBody": {
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/AdSpecType"
+          },
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "file_id": {
+            "type": "string"
+          },
+          "image_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "target_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "title",
+          "body",
+          "target_url"
+        ],
+        "x-openai-class-name": "sofa.api.resources.ads.ConversationalBottomOtmSpecBody"
+      },
+      "ReviewStatus": {
+        "type": "string",
+        "enum": [
+          "in_review",
+          "rejected",
+          "approved"
+        ],
+        "x-openai-class-name": "sofa.api.resources.common.ReviewStatus"
+      },
+      "AdItemBody": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "unixtime"
+          },
+          "updated_at": {
+            "type": "integer",
+            "format": "unixtime"
+          },
+          "creative": {
+            "$ref": "#/components/schemas/ConversationalBottomOtmSpecBody"
+          },
+          "status": {
+            "type": "string"
+          },
+          "review_status": {
+            "$ref": "#/components/schemas/ReviewStatus"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "created_at",
+          "updated_at",
+          "creative",
+          "status",
+          "review_status"
+        ],
+        "x-openai-class-name": "sofa.api.resources.ads.AdItemBody"
+      },
+      "AdsResource": {
+        "properties": {
+          "object": {
+            "type": "string"
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/AdItemBody"
+            },
+            "type": "array"
+          },
+          "first_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "last_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "has_more": {
+            "type": "boolean"
+          }
+        },
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "first_id",
+          "last_id",
+          "has_more"
+        ],
+        "x-openai-class-name": "sofa.api.resources.ads.AdsBody"
+      },
+      "AdCreativeTypeParam": {
+        "type": "string",
+        "enum": [
+          "chat_card"
+        ],
+        "x-openai-class-name": "sofa.api.params.ads.AdCreativeTypeParam"
+      },
+      "CreateAdCreativeParams": {
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/AdCreativeTypeParam"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 3,
+            "pattern": "^.*\\S.*$"
+          },
+          "body": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "target_url": {
+            "type": "string"
+          },
+          "file_id": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "title",
+          "body",
+          "target_url",
+          "file_id"
+        ],
+        "x-openai-class-name": "sofa.api.params.ads.CreateAdCreativeParams"
+      },
+      "CreateAdBody": {
+        "properties": {
+          "ad_group_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 3,
+            "pattern": "^.*\\S.*$"
+          },
+          "creative": {
+            "$ref": "#/components/schemas/CreateAdCreativeParams"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ActivePausedStatusParam"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ad_group_id",
+          "name",
+          "creative",
+          "status"
+        ],
+        "x-openai-class-name": "sofa.api.params.ads.CreateAdBody"
+      },
+      "UpdateAdCreativeParams": {
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/AdCreativeTypeParam"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1,
+            "pattern": "^.*\\S.*$"
+          },
+          "body": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "target_url": {
+            "type": "string"
+          },
+          "file_id": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "title",
+          "body",
+          "target_url",
+          "file_id"
+        ],
+        "x-openai-class-name": "sofa.api.params.ads.UpdateAdCreativeParams"
+      },
+      "UpdateAdBody": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 3,
+            "pattern": "^.*\\S.*$"
+          },
+          "creative": {
+            "$ref": "#/components/schemas/UpdateAdCreativeParams"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ActivePausedArchivedStatusParam"
+          }
+        },
+        "type": "object",
+        "required": [],
+        "x-openai-class-name": "sofa.api.params.ads.UpdateAdBody"
+      },
+      "UploadImagePurposeParam": {
+        "type": "string",
+        "enum": [
+          "account_favicon"
+        ],
+        "x-openai-class-name": "sofa.api.params.uploads.UploadImagePurposeParam"
+      },
+      "UploadImageBody": {
+        "properties": {
+          "image_url": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string",
+            "format": "binary"
+          },
+          "purpose": {
+            "$ref": "#/components/schemas/UploadImagePurposeParam"
+          }
+        },
+        "type": "object",
+        "required": [],
+        "x-openai-class-name": "sofa.api.params.uploads.UploadImageBody"
+      },
+      "UploadImageResource": {
+        "properties": {
+          "file_id": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file_id"
+        ],
+        "x-openai-class-name": "sofa.api.resources.uploads.UploadImageBody"
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "x-unofficial-sdk-compatibility": {
+    "note": "SDK compatibility notes for behavior supported by the implementation.",
+    "billing_event_types": [
+      "impression",
+      "click"
+    ],
+    "insights_fields": {
+      "campaign": [
+        "campaign.id",
+        "campaign.name",
+        "campaign.clicks",
+        "campaign.impressions",
+        "campaign.spend",
+        "campaign.ctr",
+        "campaign.cpc",
+        "campaign.cpm",
+        "metadata.timezone"
+      ],
+      "ad_group": [
+        "ad_group.id",
+        "ad_group.name",
+        "ad_group.clicks",
+        "ad_group.impressions",
+        "ad_group.spend",
+        "ad_group.ctr",
+        "ad_group.cpc",
+        "ad_group.cpm",
+        "campaign.id",
+        "campaign.name",
+        "metadata.timezone"
+      ],
+      "ad": [
+        "ad.id",
+        "ad.name",
+        "ad.clicks",
+        "ad.impressions",
+        "ad.spend",
+        "ad.ctr",
+        "ad.cpc",
+        "ad.cpm",
+        "campaign.id",
+        "campaign.name",
+        "ad_group.id",
+        "ad_group.name",
+        "metadata.timezone"
+      ]
+    },
+    "observed_response_fields": {
+      "campaign": [
+        "mode",
+        "conversion_event_setting_ids"
+      ],
+      "ad": [
+        "review_status",
+        "appeal",
+        "creative.image_url"
+      ]
+    },
+    "campaign_bidding_types": [
+      "impressions",
+      "clicks"
+    ],
+    "campaign_create_fields": [
+      "bidding_type"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="360" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+  <title id="title">Terminal quickstart for the Unofficial OpenAI Ads SDK</title>
+  <desc id="desc">A terminal-style screenshot showing package installation, campaign creation, ad group creation, and an insights query.</desc>
+  <rect width="920" height="360" rx="12" fill="#101214"/>
+  <rect x="1" y="1" width="918" height="358" rx="12" fill="none" stroke="#2a2f35"/>
+  <circle cx="30" cy="28" r="6" fill="#ff5f56"/>
+  <circle cx="52" cy="28" r="6" fill="#ffbd2e"/>
+  <circle cx="74" cy="28" r="6" fill="#27c93f"/>
+  <text x="104" y="34" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="14">openai-ads-quickstart</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="18">
+    <text x="28" y="76" fill="#6ee7b7">$ npm install unofficial-openai-ads-sdk</text>
+    <text x="28" y="108" fill="#9ca3af">added 1 package, and audited 2 packages in 684ms</text>
+    <text x="28" y="154" fill="#6ee7b7">$ node examples/create-campaign.mjs</text>
+    <text x="28" y="194" fill="#e5e7eb">created campaign</text>
+    <text x="238" y="194" fill="#93c5fd">cmpn_69fa7a4f2d1c81a3a91f4c2d7a9e0b12</text>
+    <text x="28" y="226" fill="#e5e7eb">campaign.status</text>
+    <text x="238" y="226" fill="#fde68a">paused</text>
+    <text x="28" y="258" fill="#e5e7eb">created ad group</text>
+    <text x="238" y="258" fill="#93c5fd">adgrp_69fa7a550d5c81a3ad1f2cfd7b901e32</text>
+    <text x="28" y="290" fill="#e5e7eb">billing_event_type</text>
+    <text x="238" y="290" fill="#c4b5fd">click</text>
+    <text x="28" y="322" fill="#e5e7eb">insights.data.length</text>
+    <text x="238" y="322" fill="#9ca3af">0</text>
+  </g>
+</svg>
