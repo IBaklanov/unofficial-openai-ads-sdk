@@ -71,8 +71,8 @@ def test_insights_array_query_encoding():
     client.insights.ad(
         "ad_1", fields=["ad.id", "ad.cpc"], date_range={"since": "2026-05-04", "until": "2026-05-05"}
     ).get()
-    assert "fields=ad.id" in seen[0]
-    assert "time_ranges=" in seen[0]
+    assert "fields%5B%5D=ad.id" in seen[0]
+    assert "time_ranges%5B%5D=" in seen[0]
 
 
 def test_rate_limit_retries():

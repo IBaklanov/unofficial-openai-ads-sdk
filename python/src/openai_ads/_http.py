@@ -68,7 +68,7 @@ class SyncHTTP(BaseHTTP):
                 response = self._client.request(
                     method,
                     self.url(path),
-                    params=params,
+                    params=encode_query_params(params),
                     data=data,
                     json=json_data if files is None else None,
                     files=files,
@@ -113,7 +113,7 @@ class AsyncHTTP(BaseHTTP):
                 response = await self._client.request(
                     method,
                     self.url(path),
-                    params=params,
+                    params=encode_query_params(params),
                     data=data,
                     json=json_data if files is None else None,
                     files=files,
@@ -136,6 +136,20 @@ class AsyncHTTP(BaseHTTP):
 
 def dump_model(model: BaseModel) -> Dict[str, Any]:
     return model.model_dump(exclude_unset=True, mode="json")
+
+
+def encode_query_params(params: Optional[Mapping[str, Any]]) -> Any:
+    if not params:
+        return None
+    encoded = []
+    for key, value in params.items():
+        if value is None:
+            continue
+        if isinstance(value, list):
+            encoded.extend((f"{key}[]", item) for item in value)
+        else:
+            encoded.append((key, value))
+    return encoded
 
 
 def parse_response(response: httpx.Response, response_model: Any) -> Any:
