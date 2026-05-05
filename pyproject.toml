@@ -15,6 +15,12 @@ dependencies = [
   "pydantic>=2.8.0",
 ]
 
+[project.urls]
+Homepage = "https://github.com/IBaklanov/unofficial-openai-ads-sdk"
+Repository = "https://github.com/IBaklanov/unofficial-openai-ads-sdk"
+Issues = "https://github.com/IBaklanov/unofficial-openai-ads-sdk/issues"
+Documentation = "https://developers.openai.com/ads/api-overview"
+
 [project.optional-dependencies]
 dev = [
   "pytest>=8.3.0",

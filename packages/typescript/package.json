@@ -3,6 +3,22 @@
   "version": "0.1.0",
   "description": "Unofficial TypeScript SDK for the OpenAI Ads Advertiser API.",
   "author": "Ilya Baklanov <ilya@baklanov.org>",
+  "homepage": "https://github.com/IBaklanov/unofficial-openai-ads-sdk#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IBaklanov/unofficial-openai-ads-sdk.git",
+    "directory": "packages/typescript"
+  },
+  "bugs": {
+    "url": "https://github.com/IBaklanov/unofficial-openai-ads-sdk/issues"
+  },
+  "keywords": [
+    "openai",
+    "ads",
+    "advertising",
+    "sdk",
+    "typescript"
+  ],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
