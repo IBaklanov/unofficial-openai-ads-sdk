@@ -4,7 +4,7 @@
 
 TypeScript and Python SDKs for advertisers using the OpenAI Ads Advertiser API. Handwritten clients, typed models, pagination, retries, uploads, insights, and CPM/CPC lifecycle coverage.
 
-Official API docs: [developers.openai.com/ads/api-reference](https://developers.openai.com/ads/api-reference)
+Official API docs: [developers.openai.com/ads/api-overview](https://developers.openai.com/ads/api-overview)
 
 ```sh
 npm install unofficial-openai-ads-sdk
