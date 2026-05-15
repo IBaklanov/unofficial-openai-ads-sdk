@@ -41,3 +41,7 @@ def test_contract_captures_cpc_and_dotted_insights_behavior():
     assert "bidding_type" in compatibility["campaign_create_fields"]
     assert "ad.cpc" in compatibility["insights_fields"]["ad"]
     assert "conversion_event_setting_ids" in compatibility["observed_response_fields"]["campaign"]
+    assert compatibility["insights_date_windows"]["future_until_rejected"] is True
+    assert "budget.daily_spend_limit_micros" in compatibility["budget_fields"]["unsupported_create_update_fields"]
+    assert compatibility["cpc"]["net_new_campaigns_only"] is True
+    assert compatibility["creative_image_handling"]["create_update_handle"] == "creative.file_id"

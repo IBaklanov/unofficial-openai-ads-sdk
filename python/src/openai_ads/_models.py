@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import date
 from typing import Any, Dict, Generic, List, Literal, Optional, TypeVar
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -15,6 +16,24 @@ class RequestModel(BaseModel):
 
 class Budget(RequestModel):
     lifetime_spend_limit_micros: int = Field(ge=1_000_000)
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_budget(cls, value: Any) -> Any:
+        if not isinstance(value, dict):
+            return value
+        data = dict(value)
+        if "daily_spend_limit_micros" in data:
+            raise ValueError("budget.daily_spend_limit_micros is not supported; use lifetime_spend_limit_micros")
+        legacy_spend_limit = data.pop("spend_limit_micros", None)
+        if "lifetime_spend_limit_micros" not in data and legacy_spend_limit is not None:
+            data["lifetime_spend_limit_micros"] = legacy_spend_limit
+        elif (
+            legacy_spend_limit is not None
+            and data.get("lifetime_spend_limit_micros") != legacy_spend_limit
+        ):
+            raise ValueError("budget.spend_limit_micros must match lifetime_spend_limit_micros when both are provided")
+        return data
 
 
 class TargetingLocations(RequestModel):
@@ -180,6 +199,16 @@ class AdAccount(ResponseModel):
 class DateRange(RequestModel):
     since: str
     until: str
+
+    @model_validator(mode="after")
+    def until_is_not_future(self) -> "DateRange":
+        try:
+            until_date = date.fromisoformat(self.until)
+        except ValueError:
+            return self
+        if until_date > date.today():
+            raise ValueError("date_range.until cannot be in the future")
+        return self
 
 
 class InsightsParams(RequestModel):

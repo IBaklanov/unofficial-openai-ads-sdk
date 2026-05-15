@@ -1,6 +1,6 @@
 {
   "name": "unofficial-openai-ads-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Unofficial TypeScript SDK for the OpenAI Ads Advertiser API.",
   "author": "Ilya Baklanov <ilya@baklanov.org>",
   "homepage": "https://github.com/IBaklanov/unofficial-openai-ads-sdk#readme",

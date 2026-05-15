@@ -39,6 +39,40 @@ describe("OpenAIAds TypeScript SDK", () => {
     expect(JSON.parse(String(requests[0].init.body))).not.toHaveProperty("campaign_id");
   });
 
+  it("maps legacy campaign spend limits and rejects unsupported budget/update fields", async () => {
+    const requests: { url: string; init: RequestInit }[] = [];
+    const client = new OpenAIAds({
+      apiKey: "test",
+      fetch: async (url, init) => {
+        requests.push({ url: String(url), init: init ?? {} });
+        return jsonResponse({
+          id: "cmpn_1",
+          created_at: 1,
+          updated_at: 1,
+          name: "Campaign",
+          status: "paused",
+          budget: { lifetime_spend_limit_micros: 1_000_000 },
+        });
+      },
+    });
+
+    await client.campaigns.create({
+      name: "Campaign",
+      status: "paused",
+      budget: { spend_limit_micros: 1_000_000 },
+    });
+
+    expect(JSON.parse(String(requests[0].init.body)).budget).toEqual({ lifetime_spend_limit_micros: 1_000_000 });
+    expect(() =>
+      client.campaigns.create({
+        name: "Campaign",
+        status: "paused",
+        budget: { daily_spend_limit_micros: 1_000_000 } as any,
+      }),
+    ).toThrow(ValidationError);
+    expect(() => client.campaigns.update("cmpn_1", { bidding_type: "clicks" } as any)).toThrow(ValidationError);
+  });
+
   it("creates click ad groups under campaigns", async () => {
     const client = new OpenAIAds({
       apiKey: "test",

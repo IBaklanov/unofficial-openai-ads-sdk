@@ -160,7 +160,24 @@ const BillingEventType = z.enum(["impression", "click"]);
 const ReviewStatus = z.enum(["in_review", "rejected", "approved"]);
 const CreativeType = z.literal("chat_card");
 const ListParams = z.object({ limit: z.number().int().min(1).max(10_000).optional(), after: z.string().optional(), before: z.string().optional(), order: ListOrder.optional() });
-const Budget = z.object({ lifetime_spend_limit_micros: z.number().int().min(1_000_000) }).passthrough();
+const Budget = z.object({ lifetime_spend_limit_micros: z.number().int().min(1_000_000).optional() }).passthrough();
+const BudgetParams = z.object({
+  lifetime_spend_limit_micros: z.number().int().min(1_000_000).optional(),
+  spend_limit_micros: z.number().int().min(1_000_000).optional(),
+}).strict().superRefine((value, context) => {
+  if (value.lifetime_spend_limit_micros === undefined && value.spend_limit_micros === undefined) {
+    context.addIssue({ code: z.ZodIssueCode.custom, message: "budget.lifetime_spend_limit_micros is required" });
+  }
+  if (
+    value.lifetime_spend_limit_micros !== undefined &&
+    value.spend_limit_micros !== undefined &&
+    value.lifetime_spend_limit_micros !== value.spend_limit_micros
+  ) {
+    context.addIssue({ code: z.ZodIssueCode.custom, message: "budget.spend_limit_micros must match lifetime_spend_limit_micros when both are provided" });
+  }
+}).transform((value) => ({
+  lifetime_spend_limit_micros: value.lifetime_spend_limit_micros ?? value.spend_limit_micros,
+}));
 const TargetingLocations = z.object({ countries: z.array(z.string()).optional() }).passthrough();
 const Targeting = z.object({ locations: TargetingLocations.optional(), excluded_locations: TargetingLocations.optional() }).passthrough();
 const Campaign = z.object({
@@ -184,11 +201,19 @@ const CampaignCreateParams = z.object({
   start_time: z.number().int().min(946684800).max(4102444800).optional(),
   end_time: z.number().int().min(946684800).max(4102444800).optional(),
   status: Status,
-  budget: Budget,
+  budget: BudgetParams,
   targeting: Targeting.optional(),
   bidding_type: CampaignBiddingType.optional(),
 }).strict();
-const CampaignUpdateParams = CampaignCreateParams.partial().extend({ status: MutableStatus.optional() }).strict();
+const CampaignUpdateParams = z.object({
+  name: z.string().min(3).max(1000).refine((v) => v.trim().length > 0, "name must contain a non-space character").optional(),
+  description: z.string().optional(),
+  start_time: z.number().int().min(946684800).max(4102444800).optional(),
+  end_time: z.number().int().min(946684800).max(4102444800).optional(),
+  status: MutableStatus.optional(),
+  budget: BudgetParams.optional(),
+  targeting: Targeting.optional(),
+}).strict();
 const BiddingConfig = z.object({ billing_event_type: BillingEventType, max_bid_micros: z.number().int().min(1).max(100_000_000) }).strict();
 const AdGroup = z.object({ id: z.string(), created_at: z.number(), updated_at: z.number(), name: z.string(), description: z.string().nullable().optional(), context_hints: z.array(z.string()).optional(), status: z.string(), bidding_config: BiddingConfig.passthrough() }).passthrough();
 const AdGroupCreateParams = z.object({ campaign_id: z.string(), name: z.string().min(3).max(1000), description: z.string().optional(), context_hints: z.array(z.string()).optional(), status: Status, bidding_config: BiddingConfig }).strict();
@@ -217,8 +242,8 @@ const InsightsParams = z.object({
 const Insight = z.object({ id: z.string().nullable().optional(), start_time: z.string().or(z.number()).optional(), end_time: z.string().or(z.number()).optional() }).passthrough();
 
 export type Campaign = z.infer<typeof Campaign>;
-export type CampaignCreateParams = z.infer<typeof CampaignCreateParams>;
-export type CampaignUpdateParams = z.infer<typeof CampaignUpdateParams>;
+export type CampaignCreateParams = z.input<typeof CampaignCreateParams>;
+export type CampaignUpdateParams = z.input<typeof CampaignUpdateParams>;
 export type AdGroup = z.infer<typeof AdGroup>;
 export type AdGroupCreateParams = z.infer<typeof AdGroupCreateParams>;
 export type AdGroupUpdateParams = z.infer<typeof AdGroupUpdateParams>;

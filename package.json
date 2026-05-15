@@ -1,7 +1,7 @@
 {
   "name": "unofficial-openai-ads-sdk-repo",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Unofficial polyglot SDK for the OpenAI Ads Advertiser API.",
   "author": "Ilya Baklanov <ilya@baklanov.org>",
   "scripts": {

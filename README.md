@@ -66,7 +66,7 @@ print(campaign.id)
 - Ad account
 - Insights
 
-The SDK models the current public OpenAI Ads API and supports CPC creation with `billing_event_type = "click"` for CPC ad groups and `bidding_type = "clicks"` for CPC campaigns.
+The SDK models the current public OpenAI Ads API and supports CPC creation with `billing_event_type = "click"` for CPC ad groups and `bidding_type = "clicks"` for net-new CPC campaigns. It uploads creative images through `/upload` and uses returned `file_id` values as durable handles.
 
 ## Reliability
 

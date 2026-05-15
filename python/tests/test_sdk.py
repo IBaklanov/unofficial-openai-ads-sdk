@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import date, timedelta
+
 import httpx
 import pytest
 from openai_ads import OpenAIAds, RateLimitError, ValidationError
@@ -35,6 +37,32 @@ def test_campaign_create_does_not_require_campaign_id():
     assert campaign.id == "cmpn_1"
     assert requests[0].url.path == "/v1/campaigns"
     assert "campaign_id" not in requests[0].content.decode()
+
+
+def test_campaign_budget_mapping_and_unsupported_update_fields():
+    requests = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return response(
+            {
+                "id": "cmpn_1",
+                "created_at": 1,
+                "updated_at": 1,
+                "name": "Campaign",
+                "status": "paused",
+                "budget": {"lifetime_spend_limit_micros": 1_000_000},
+            }
+        )
+
+    client = OpenAIAds(api_key="test", http_client=httpx.Client(transport=httpx.MockTransport(handler)))
+    client.campaigns.create(name="Campaign", status="paused", budget={"spend_limit_micros": 1_000_000})
+
+    assert '"budget":{"lifetime_spend_limit_micros":1000000}' in requests[0].content.decode()
+    with pytest.raises(ValidationError):
+        client.campaigns.create(name="Campaign", status="paused", budget={"daily_spend_limit_micros": 1_000_000})
+    with pytest.raises(ValidationError):
+        client.campaigns.update("cmpn_1", bidding_type="clicks")
 
 
 def test_ad_group_create_supports_click_billing():
@@ -73,6 +101,15 @@ def test_insights_array_query_encoding():
     ).get()
     assert "fields%5B%5D=ad.id" in seen[0]
     assert "time_ranges%5B%5D=" in seen[0]
+
+
+def test_insights_reject_future_until_date():
+    client = OpenAIAds(
+        api_key="test", http_client=httpx.Client(transport=httpx.MockTransport(lambda request: response({})))
+    )
+    future = (date.today() + timedelta(days=1)).isoformat()
+    with pytest.raises(ValidationError):
+        client.insights.ad("ad_1", date_range={"since": "2026-05-04", "until": future}).get()
 
 
 def test_rate_limit_retries():

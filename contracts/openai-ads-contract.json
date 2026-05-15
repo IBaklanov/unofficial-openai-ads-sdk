@@ -2426,6 +2426,38 @@
     ],
     "campaign_create_fields": [
       "bidding_type"
-    ]
+    ],
+    "insights_date_windows": {
+      "future_until_rejected": true,
+      "same_day_allowed_but_rows_may_lag": true
+    },
+    "insights_scope_failures": {
+      "recommended_bulk_behavior": "skip_failed_scope_continue_and_record_failure",
+      "failure_statuses": [
+        404,
+        "persistent_5xx"
+      ]
+    },
+    "creative_image_handling": {
+      "upload_endpoint": "/upload",
+      "create_update_handle": "creative.file_id",
+      "signed_response_artifact": "creative.image_url"
+    },
+    "budget_fields": {
+      "create_update_supported": [
+        "budget.lifetime_spend_limit_micros"
+      ],
+      "legacy_aliases": {
+        "budget.spend_limit_micros": "budget.lifetime_spend_limit_micros"
+      },
+      "unsupported_create_update_fields": [
+        "budget.daily_spend_limit_micros"
+      ]
+    },
+    "cpc": {
+      "campaign_create_field": "bidding_type=clicks",
+      "ad_group_bidding_config": "billing_event_type=click",
+      "net_new_campaigns_only": true
+    }
   }
 }
