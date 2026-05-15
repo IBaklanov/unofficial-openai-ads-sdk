@@ -114,8 +114,11 @@ describe("OpenAIAds TypeScript SDK", () => {
   it("rejects legacy undotted insight fields", () => {
     const client = new OpenAIAds({ apiKey: "test", fetch: async () => jsonResponse({ object: "list", data: [], has_more: false }) });
     expect(() => client.insights.ad("ad_1", { fields: ["ad_group_name"] })).toThrow(ValidationError);
+    expect(() => client.insights.ad("ad_1", { fields: ["ad_group.name"] })).toThrow(ValidationError);
+    expect(() => client.insights.ad("ad_1", { fields: ["ad.name"] })).toThrow(ValidationError);
     expect(() => client.insights.ad("ad_1", { fields: ["timezone"] })).toThrow(ValidationError);
-    expect(() => client.insights.ad("ad_1", { fields: ["ad_group.name", "metadata.timezone"] })).not.toThrow();
+    expect(() => client.insights.ad("ad_1", { fields: ["metadata.timezone"] })).toThrow(ValidationError);
+    expect(() => client.insights.ad("ad_1", { fields: ["ad.id", "ad.clicks", "ad.impressions"] })).not.toThrow();
   });
 
   it("retries rate limits and surfaces rate limit errors", async () => {

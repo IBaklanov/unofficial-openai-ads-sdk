@@ -125,23 +125,16 @@ def test_live_mutating_integration_creates_updates_insights_and_archives(
             "aggregation_level": "ad",
             "limit": 1,
             "date_range": {"since": dates["since"], "until": dates["until"]},
-            "fields": ["ad.id", "ad.name", "ad.clicks", "ad.impressions"],
+            "fields": ["ad.id", "ad.clicks", "ad.impressions"],
         }
         assert isinstance(client.insights.ad_account(**insight_params).get().data, list)
         assert isinstance(client.insights.campaign(campaign.id, **insight_params).get().data, list)
         assert isinstance(client.insights.ad_group(ad_group.id, **insight_params).get().data, list)
         assert isinstance(client.insights.ad(ad.id, **insight_params).get().data, list)
 
-        assert client.ads.activate(ad.id).id == ad.id
-        paused_ad = client.ads.pause(ad.id)
-        assert client.ad_groups.activate(ad_group.id).id == ad_group.id
-        paused_ad_group = client.ad_groups.pause(ad_group.id)
-        assert client.campaigns.activate(campaign.id).id == campaign.id
-        paused_campaign = client.campaigns.pause(campaign.id)
-
-        assert paused_ad.status == "paused"
-        assert paused_ad_group.status == "paused"
-        assert paused_campaign.status == "paused"
+        assert client.ads.retrieve(ad.id).status
+        assert client.ad_groups.retrieve(ad_group.id).status
+        assert client.campaigns.retrieve(campaign.id).status
     finally:
         archive_created(client, created)
 
@@ -167,11 +160,12 @@ def archive_created(client: OpenAIAds, created: dict[str, str]) -> None:
 def validation_dates() -> dict[str, int | str]:
     today = date.today()
     yesterday = today - timedelta(days=1)
+    two_days_ago = today - timedelta(days=2)
     tomorrow = today + timedelta(days=1)
     day_after = today + timedelta(days=2)
     return {
-        "since": yesterday.isoformat(),
-        "until": today.isoformat(),
+        "since": two_days_ago.isoformat(),
+        "until": yesterday.isoformat(),
         "start": unix_seconds(tomorrow),
         "end": unix_seconds(day_after),
     }

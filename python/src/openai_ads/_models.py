@@ -228,10 +228,16 @@ class InsightsParams(RequestModel):
         if value is None:
             return value
         for field in value:
-            if "." not in field:
+            if (
+                "." not in field
+                or field.endswith("_name")
+                or field.endswith(".name")
+                or field == "timezone"
+                or field.endswith(".timezone")
+            ):
                 raise ValueError(
-                    f'insights field "{field}" is not supported; use dotted fields such as '
-                    "ad_group.name or metadata.timezone"
+                    f'insights field "{field}" is not supported; use stable dotted id and metric fields '
+                    "instead of name or timezone fields"
                 )
         return value
 

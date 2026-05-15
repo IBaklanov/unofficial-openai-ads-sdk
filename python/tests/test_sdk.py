@@ -113,8 +113,14 @@ def test_insights_reject_legacy_undotted_fields():
     with pytest.raises(ValidationError):
         client.insights.ad("ad_1", fields=["ad_group_name"]).get()
     with pytest.raises(ValidationError):
+        client.insights.ad("ad_1", fields=["ad_group.name"]).get()
+    with pytest.raises(ValidationError):
+        client.insights.ad("ad_1", fields=["ad.name"]).get()
+    with pytest.raises(ValidationError):
         client.insights.ad("ad_1", fields=["timezone"]).get()
-    client.insights.ad("ad_1", fields=["ad_group.name", "metadata.timezone"]).get()
+    with pytest.raises(ValidationError):
+        client.insights.ad("ad_1", fields=["metadata.timezone"]).get()
+    client.insights.ad("ad_1", fields=["ad.id", "ad.clicks", "ad.impressions"]).get()
 
 
 def test_insights_reject_future_until_date():
