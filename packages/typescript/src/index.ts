@@ -230,11 +230,11 @@ const AdAccount = z.object({ id: z.string(), name: z.string().optional(), url: z
 const DateRange = z.object({ since: z.string(), until: z.string() }).strict().refine((v) => !isFutureDate(v.until), "dateRange.until cannot be in the future");
 const InsightFields = z.array(z.string()).superRefine((fields, context) => {
   for (const [index, field] of fields.entries()) {
-    if (!field.includes(".")) {
+    if (!field.includes(".") || field.endsWith("_name") || field.endsWith(".name") || field === "timezone" || field.endsWith(".timezone")) {
       context.addIssue({
         code: z.ZodIssueCode.custom,
         path: [index],
-        message: `insights field "${field}" is not supported; use dotted fields such as ad_group.name or metadata.timezone`,
+        message: `insights field "${field}" is not supported; use stable dotted id and metric fields instead of name or timezone fields`,
       });
     }
   }

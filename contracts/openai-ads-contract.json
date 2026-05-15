@@ -2371,31 +2371,25 @@
     "insights_fields": {
       "campaign": [
         "campaign.id",
-        "campaign.name",
         "campaign.clicks",
         "campaign.impressions",
         "campaign.spend",
         "campaign.ctr",
         "campaign.cpc",
-        "campaign.cpm",
-        "metadata.timezone"
+        "campaign.cpm"
       ],
       "ad_group": [
         "ad_group.id",
-        "ad_group.name",
         "ad_group.clicks",
         "ad_group.impressions",
         "ad_group.spend",
         "ad_group.ctr",
         "ad_group.cpc",
         "ad_group.cpm",
-        "campaign.id",
-        "campaign.name",
-        "metadata.timezone"
+        "campaign.id"
       ],
       "ad": [
         "ad.id",
-        "ad.name",
         "ad.clicks",
         "ad.impressions",
         "ad.spend",
@@ -2403,10 +2397,7 @@
         "ad.cpc",
         "ad.cpm",
         "campaign.id",
-        "campaign.name",
-        "ad_group.id",
-        "ad_group.name",
-        "metadata.timezone"
+        "ad_group.id"
       ]
     },
     "observed_response_fields": {
@@ -2455,15 +2446,18 @@
       "net_new_campaigns_only": true
     },
     "insights_field_validation": {
-      "accepted_format": "dotted_fields",
+      "accepted_format": "stable_dotted_id_and_metric_fields",
       "rejected_examples": [
         "ad_group_name",
-        "timezone"
+        "campaign_name",
+        "ad_name",
+        "ad_group.name",
+        "campaign.name",
+        "ad.name",
+        "timezone",
+        "metadata.timezone"
       ],
-      "accepted_replacements": {
-        "ad_group_name": "ad_group.name",
-        "timezone": "metadata.timezone"
-      }
+      "note": "SDK compatibility guardrail for field shapes known to break current insights requests."
     }
   }
 }

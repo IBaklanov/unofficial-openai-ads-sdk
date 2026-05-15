@@ -39,10 +39,12 @@ describe("OpenAI Ads public contract", () => {
     expect(compatibility.campaign_bidding_types).toContain("clicks");
     expect(compatibility.campaign_create_fields).toContain("bidding_type");
     expect(compatibility.insights_fields.ad).toContain("ad.cpc");
+    expect(compatibility.insights_fields.ad).not.toContain("ad.name");
+    expect(compatibility.insights_fields.ad).not.toContain("metadata.timezone");
     expect(compatibility.observed_response_fields.campaign).toContain("conversion_event_setting_ids");
     expect(compatibility.insights_date_windows.future_until_rejected).toBe(true);
     expect(compatibility.insights_field_validation.rejected_examples).toContain("ad_group_name");
-    expect(compatibility.insights_field_validation.accepted_replacements.timezone).toBe("metadata.timezone");
+    expect(compatibility.insights_field_validation.rejected_examples).toContain("metadata.timezone");
     expect(compatibility.budget_fields.unsupported_create_update_fields).toContain("budget.daily_spend_limit_micros");
     expect(compatibility.cpc.net_new_campaigns_only).toBe(true);
   });
