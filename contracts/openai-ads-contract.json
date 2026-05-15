@@ -2438,11 +2438,6 @@
         "persistent_5xx"
       ]
     },
-    "creative_image_handling": {
-      "upload_endpoint": "/upload",
-      "create_update_handle": "creative.file_id",
-      "signed_response_artifact": "creative.image_url"
-    },
     "budget_fields": {
       "create_update_supported": [
         "budget.lifetime_spend_limit_micros"
@@ -2458,6 +2453,17 @@
       "campaign_create_field": "bidding_type=clicks",
       "ad_group_bidding_config": "billing_event_type=click",
       "net_new_campaigns_only": true
+    },
+    "insights_field_validation": {
+      "accepted_format": "dotted_fields",
+      "rejected_examples": [
+        "ad_group_name",
+        "timezone"
+      ],
+      "accepted_replacements": {
+        "ad_group_name": "ad_group.name",
+        "timezone": "metadata.timezone"
+      }
     }
   }
 }

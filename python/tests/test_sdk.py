@@ -103,6 +103,20 @@ def test_insights_array_query_encoding():
     assert "time_ranges%5B%5D=" in seen[0]
 
 
+def test_insights_reject_legacy_undotted_fields():
+    client = OpenAIAds(
+        api_key="test",
+        http_client=httpx.Client(
+            transport=httpx.MockTransport(lambda request: response({"object": "list", "data": [], "has_more": False}))
+        ),
+    )
+    with pytest.raises(ValidationError):
+        client.insights.ad("ad_1", fields=["ad_group_name"]).get()
+    with pytest.raises(ValidationError):
+        client.insights.ad("ad_1", fields=["timezone"]).get()
+    client.insights.ad("ad_1", fields=["ad_group.name", "metadata.timezone"]).get()
+
+
 def test_insights_reject_future_until_date():
     client = OpenAIAds(
         api_key="test", http_client=httpx.Client(transport=httpx.MockTransport(lambda request: response({})))

@@ -222,6 +222,19 @@ class InsightsParams(RequestModel):
     filters: Optional[List[str]] = None
     sort: Optional[List[str]] = None
 
+    @field_validator("fields")
+    @classmethod
+    def fields_are_dotted(cls, value: Optional[List[str]]) -> Optional[List[str]]:
+        if value is None:
+            return value
+        for field in value:
+            if "." not in field:
+                raise ValueError(
+                    f'insights field "{field}" is not supported; use dotted fields such as '
+                    "ad_group.name or metadata.timezone"
+                )
+        return value
+
 
 class Insight(ResponseModel):
     id: Optional[str] = None

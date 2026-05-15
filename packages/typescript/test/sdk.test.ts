@@ -111,6 +111,13 @@ describe("OpenAIAds TypeScript SDK", () => {
     expect(captured).toContain("time_ranges%5B%5D=");
   });
 
+  it("rejects legacy undotted insight fields", () => {
+    const client = new OpenAIAds({ apiKey: "test", fetch: async () => jsonResponse({ object: "list", data: [], has_more: false }) });
+    expect(() => client.insights.ad("ad_1", { fields: ["ad_group_name"] })).toThrow(ValidationError);
+    expect(() => client.insights.ad("ad_1", { fields: ["timezone"] })).toThrow(ValidationError);
+    expect(() => client.insights.ad("ad_1", { fields: ["ad_group.name", "metadata.timezone"] })).not.toThrow();
+  });
+
   it("retries rate limits and surfaces rate limit errors", async () => {
     let calls = 0;
     const client = new OpenAIAds({

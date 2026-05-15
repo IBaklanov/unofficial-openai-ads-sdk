@@ -228,6 +228,17 @@ const UploadParams = z.object({ image_url: z.string().url().optional(), file: z.
 const Upload = z.object({ file_id: z.string() }).passthrough();
 const AdAccount = z.object({ id: z.string(), name: z.string().optional(), url: z.string().optional(), preview_url: z.string().optional(), timezone: z.string().optional(), currency_code: z.string().optional() }).passthrough();
 const DateRange = z.object({ since: z.string(), until: z.string() }).strict().refine((v) => !isFutureDate(v.until), "dateRange.until cannot be in the future");
+const InsightFields = z.array(z.string()).superRefine((fields, context) => {
+  for (const [index, field] of fields.entries()) {
+    if (!field.includes(".")) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [index],
+        message: `insights field "${field}" is not supported; use dotted fields such as ad_group.name or metadata.timezone`,
+      });
+    }
+  }
+});
 const InsightsParams = z.object({
   timeGranularity: z.enum(["daily", "none"]).optional(),
   aggregationLevel: z.enum(["ad_account", "campaign", "ad_group", "ad"]).optional(),
@@ -235,7 +246,7 @@ const InsightsParams = z.object({
   before: z.string().optional(),
   after: z.string().optional(),
   dateRange: DateRange.optional(),
-  fields: z.array(z.string()).optional(),
+  fields: InsightFields.optional(),
   filters: z.array(z.string()).optional(),
   sort: z.array(z.string()).optional(),
 }).strict();
